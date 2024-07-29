@@ -3,14 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="mockTest.DemoMock">
+      <class name="testng_pkg.VrlTravels">
         <methods>
-          <include name="addCart"/>
-          <include name="pageLoad"/>
-          <include name="registration"/>
+          <include name="urlLoading"/>
+          <include name="screenshot"/>
           <include name="setUp"/>
         </methods>
-      </class> <!-- mockTest.DemoMock -->
+      </class> <!-- testng_pkg.VrlTravels -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

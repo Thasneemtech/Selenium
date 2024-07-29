@@ -2,111 +2,112 @@ package testng_pkg;
 
 import java.util.Set;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class WindowHandlerWrk {
 	
-		WebDriver driver;
-		String url = "https://www.amazon.in";
-		
-		@BeforeTest
-		public void setUp() {
-			driver= new ChromeDriver();
-			driver.get(url);
-			
-			driver.manage().window().maximize();	
-			}
-		
-		@Test
-		public void searchtext(){
-			WebElement search = driver.findElement(By.xpath("//*[@id=\"twotabsearchtextbox\"]"));
-			search.sendKeys("mobile phones");
-			search.submit();
-			
-			String expectation = "Amazon.in:mobilephones";
-			String actual = driver.getTitle();
-			System.out.println("actual is : "+actual);
-			Assert.assertEquals(expectation,actual);
-			
-			WebElement elem = driver.findElement(By.xpath("//*[@id=\"CardInstance0uBsPiYLNq9O6oOVbT_KAg\"]/div[1]/div[2]/div[1]/div/div[2]/a/span/span[2]"));
-			elem.click();
-			
+	WebDriver driver;
+	String url = "https://www.amazon.in/";
+	
+	@BeforeTest
+	public void setUp() {
+		driver = new ChromeDriver();
 	}
+	
+   @BeforeMethod
+	public void urlLoading() {
+		driver.get(url);	
+		driver.manage().window().maximize();
+	}
+   @Test
+    public void amazon() throws InterruptedException {
+	   WebElement search = driver.findElement(By.id("twotabsearchtextbox"));
+		search.sendKeys("Mobilephones",Keys.ENTER);
 		
-	@Test
-	public void windowHandle() {
+//		String excepted = "Mobilephones";
+//		String actual = driver.getTitle();
+//		System.out.println("Actual title is : "+actual);
+//		Assert.assertEquals(actual, excepted, "Title not found");
 		
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollBy(0,300)","");
+		js.executeScript("window.scrollBy(0,450)");
 		
 		String parentWindow = driver.getWindowHandle();
-		System.out.println("parentWindow = "+driver.getTitle());
-		driver.findElement(By.xpath("//*[@id=\"add-to-cart-button\"]")).click();
-		
-		JavascriptExecutor js1 = (JavascriptExecutor) driver;
-		js1.executeScript("window.scrollBy(0,800)","");
+		System.out.println("Parent Window = "+driver.getTitle());
+		driver.findElement(By.xpath("//body/div[@id='a-page']/div[@id='search']/div[1]/div[1]/div[1]/span[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/span[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/span[1]/a[1]/div[1]/img[1]")).click();
 		
 		Set<String> allWindowHandles = driver.getWindowHandles();
 		for(String handle : allWindowHandles) {
 			if(!handle.equalsIgnoreCase(parentWindow)) {
 				driver.switchTo().window(handle);
-				driver.findElement(By.xpath("//*[@id=\"attach-sidesheet-view-cart-button\"]/span/input")).click();
 				
-				driver.close();
+				JavascriptExecutor js1 = (JavascriptExecutor) driver;
+				js1.executeScript("window.scrollBy(0,250)");
+				
+				
+				driver.findElement(By.xpath("//body/div[@id='a-page']/div[@id='dp']/div[@id='dp-container']/div[@id='ppd']/div[@id='rightCol']/div[@id='desktop_buybox']/div[@id='buybox']/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/form[1]/div[1]/div[1]/div[38]/div[1]/span[1]/span[1]/span[1]/input[1]")).click();
+				
+				
+				
 			}
-			driver.switchTo().window(parentWindow);
+			
+			
 		}
-	}
 		
-//		@Test
-//		public void windowHandler1() {
-//		JavascriptExecutor js = (JavascriptExecutor) driver;
-//		js.executeScript("window.scrollBy(0,500)","");
-//		
-//		String parentWindow = driver.getWindowHandle();
-//		System.out.println("parentWindow = "+driver.getTitle());
-//		driver.findElement(By.xpath("//*[@id=\"add-to-cart-button\"]")).click();
-//		
-//		JavascriptExecutor js1 = (JavascriptExecutor) driver;
-//		js1.executeScript("window.scrollBy(0,800)","");
-//		
-//		Set<String> allWindowHandles = driver.getWindowHandles();
-//		for(String handle : allWindowHandles) {
-//			if(!handle.equalsIgnoreCase(parentWindow)) {
-//				driver.switchTo().window(handle);
-//				driver.findElement(By.xpath("//*[@id=\"attach-sidesheet-view-cart-button\"]/span/input")).click();
-//				
-//				driver.close();
-//			}
-//			driver.switchTo().window(parentWindow);
-//		}
-//		
-//	}
-//
-//		
-//	
-//	@Test
-//	public void cart() throws InterruptedException {
-//		Thread.sleep(30000);
-//		driver.navigate().back();
-//		
-//		JavascriptExecutor js4 = (JavascriptExecutor) driver;
-//		js4.executeScript("window.scrollBy(500,0)","");
-//		
-//		
-//	}
-	
+		String parentWindow1 = driver.getWindowHandle();
+		System.out.println("Parent Window = "+driver.getTitle());
+		driver.findElement(By.xpath("//body/div[@id='a-page']/div[@id='dp']/div[@id='dp-container']/div[@id='ppd']/div[@id='rightCol']/div[@id='desktop_buybox']/div[@id='buybox']/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/form[1]/div[1]/div[1]/div[38]/div[1]/span[1]/span[1]/span[1]/input[1]")).click();
+		
+		Set<String> allWindowHandles1 = driver.getWindowHandles();
+		for(String handle : allWindowHandles1) {
+			if(!handle.equalsIgnoreCase(parentWindow1)) {
+				driver.switchTo().window(handle);
+				
+				JavascriptExecutor js1 = (JavascriptExecutor) driver;
+				js1.executeScript("window.scrollBy(0,250)");
+				
+				
+			
+//		    WebElement button= driver.findElement(By.xpath("//body/div[8]/div[3]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[3]/span[1]/span[1]/input[1]"));
+//			button.click();	
+			driver.close();
+   }
+				
+   		driver.switchTo().window(parentWindow1);
+			
+			
 
 }
 		
 		
+		Thread.sleep(3000);
+		driver.navigate().back();
+		JavascriptExecutor js2 = (JavascriptExecutor) driver;
+		js2.executeScript("window.scrollBy(250,0)");
+		
+		driver.findElement(By.id("nav-cart-count-container")).click();
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 
-
-
+}

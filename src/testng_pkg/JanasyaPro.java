@@ -1,116 +1,123 @@
 package testng_pkg;
 
+import java.time.Duration;
 import java.util.List;
-import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class JanasyaPro {
-	
 	WebDriver driver;
-	String url = "https://janasya.com";
+	String url = "https://janasya.com/";
 	
-	@BeforeTest
-	public void setUp() {
-		driver= new ChromeDriver();
-	}
-	
-	@BeforeMethod
-	public void pageLoad() {
-		driver.get(url);
-		
-		driver.manage().window().maximize();
-	}
-
-	@Test
-	public void newclick() {
-		driver.findElement(By.xpath("//*[@id=\"HeaderNavigation\"]/nav/ul/li[1]/a/span")).click();
-	}
-	
-	@Test
-	public void logoVerify() {
-		
-		Boolean logo = driver.findElement(By.xpath("//*[@id=\"shopify-section-sections--16349892411562__0551e2c3-4916-467e-a6e9-b0d8594a3ff3\"]/header/div/div/div[2]/div/div/div/a/img")).isDisplayed();
-		if(logo) {
-			System.out.println("Logo is present");
+	 @BeforeTest
+		public void setUp() {
+			driver = new ChromeDriver();
 		}
-		else{
-			System.out.println("Logo is not present");
+		
+	 @BeforeMethod
+		public void urlLoading() {
+			driver.get(url);	
+			driver.manage().window().maximize();
 		}
-	}
-	
-//	@Test
-//	public void dropDown() {
-//		WebElement drpdwn = driver.findElement(By.xpath("//*[@id=\"CollectionProductGrid\"]/div/toolbar-item/div[2]/div[3]/div[1]/div/div/span[2]"));
-//		Select dd = new Select(drpdwn);
-//		dd.selectByVisibleText("15");
-//		
-//	}
-//	
-//	@Test
-//	public void slctCategories() {
-//		WebElement drpdwn1 = driver.findElement(By.xpath("//*[@id=\"halo-sidebar\"]/div[2]/div[1]/div[1]/h3"));
-//		Select dd1 = new Select(drpdwn1);
-//		dd1.selectByVisibleText("Kurtas");
-//	}
-//	
-	@Test
-	public void linksLocate() {
-		
-		List<WebElement>li = driver.findElements(By.tagName("a"));  //here datas stored in li
-		System.out.println("Total no of links : "+li.size());
-		
-		    for(WebElement data : li) {
-			String links = data .getAttribute("href");   //for-each loop
-			System.out.println(data.getText() + "   " + links);
-		    }
-	}
-	
-	@Test
-	public void menusLocate() {
-		
-		List<WebElement> menu = driver.findElements(By.tagName("ul"));
-		System.out.println("Total no of menus : "+menu.size());
-		
-		for(WebElement data : menu) {
-			System.out.println(data.getText());
-		}
-	}
-	
-	@Test
-	public void searchText() {
-		WebElement search = driver.findElement(By.id("Layer_1"));
-		search.sendKeys("kurta");
-		search.submit();
-	}
-	
-	@Test
-	public void windowHandle() {
-		String parentWindow = driver.getWindowHandle();
-		System.out.println("parentWindow = "+driver.getTitle());
-		driver.findElement(By.xpath("/html/body/p/a")).click();
-		
-		Set<String> allWindowHandles = driver.getWindowHandles();
-		for(String handle : allWindowHandles) {
-			if(!handle.equalsIgnoreCase(parentWindow)) {
-				driver.switchTo().window(handle);
-				driver.findElement(By.name("emailid")).sendKeys("abc123@gmail.com");
-				driver.findElement(By.name("btnLogin")).click();
-				
-				driver.close();
+	 
+	 @Test
+	 public void janasyawebsite() {
+		 driver.findElement(By.xpath("//span[contains(text(),'New')]")).click();
+		 
+		 Boolean logo = driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/a[1]/img[1]")).isDisplayed();
+			if(logo) {
+			  System.out.println("Logo is displayed");	
 			}
-			driver.switchTo().window(parentWindow);
-		}
+			else
+			{
+				System.out.println("Logo Not selected");
+			}
+			
+
+			
+			 driver.findElement(By.xpath("//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/toolbar-item[1]/div[2]/div[3]/div[1]/div[1]/div[1]")).click();
+			 driver.findElement(By.xpath("//span[contains(text(),'15')]")).click();
+			 
+			 WebElement categ = driver.findElement(By.xpath("//h3[contains(text(),'Categories')]"));
+			 categ.click();
+			 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			 driver.findElement(By.xpath("//div[@id='CollectionSection-template--16349890937002__product-grid']/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/ul[1]/li[1]/a[1]")).click();
+			 
+			
+			 
+	 
+			 
+
+			 JavascriptExecutor js = (JavascriptExecutor) driver;
+			 js.executeScript("window.scrollBy(0,600)");
+			 driver.findElement(By.xpath("//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/ul[1]/li[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/button[1]")).click();
+			 
+			
+			 
+			 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30)); 
+			 driver.findElement(By.id("44199301382314")).click();
+			 
+			
+				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50)); 
+//        	   driver.findElement(By.xpath("//body/div[@id='halo-cart-sidebar']/button[1]")).click();
+			
+			
 		
-		
-	}
-	
+			driver.navigate().back();
+			 
+			 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			 WebElement ethic = driver.findElement(By.xpath("//sticky-header/div[1]/div[1]/div[1]/div[1]/div[1]/nav[1]/ul[1]/li[3]/a[1]"));
+			 Actions act = new Actions(driver);
+			 act.moveToElement(ethic).perform();
+			  
+			  
+			  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//sticky-header/div[1]/div[1]/div[1]/div[1]/div[1]/nav[1]/ul[1]/li[3]/ul[1]/li[3]/a[1]"))).click();
+			  
+			  WebElement search = driver.findElement(By.id("Search-In-Modal"));
+			  search.sendKeys("kurtha",Keys.ENTER);
+			  
+			  driver.findElement(By.xpath("//header/div[1]/div[1]/div[3]/div[1]/div[1]/a[2]")).click();
+			  driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1000)); 
+			  
+			  
+			  
+			  
+	 }
+	 
+	 @Test
+	 public void locatelinks() {
+		 List<WebElement> li = driver.findElements(By.tagName("a"));		
+			System.out.println("Total no. of links in the page : "+li.size());
+			
+			for(WebElement data : li) {
+				String link = data.getAttribute("href");
+				System.out.println(data.getText()+" - "+link);
+			}
+			
+			
+			
+			 List<WebElement> navbarmenu = driver.findElements(By.tagName("ul"));
+			 for (WebElement menu : navbarmenu) {
+				 
+		            System.out.println(menu.getText());
+		        }
+		 
+	 }
+	 
+	 
+	 
+	 
+
 }
